@@ -28,7 +28,6 @@ def update_board(move, player)
 end
 
 def get_move
-  draw_grid()
   puts "Enter the number where you'd like to play your turn: "
   puts "Press x to quit"
   move = gets.chomp
@@ -62,21 +61,27 @@ def check(player)
   #checking for across from either side
   if (@board[0][0] == @board[1][1] && @board[1][1]== @board[2][2]) || (@board[0][2] == @board[1][1] && @board[1][1] == @board[2][0])
     puts "Player #{player} wins".center(50, "~")
-    return
+    return true
   end
   return false
   end
 
+def display
+  system "clear"
+  draw_grid
+end
 
 flag = false
 turn = 1
 while flag == false do
+  display
   #when turn is odd its player 1
   turn % 2 != 0 ? (player = "1") : (player = "2")
   puts "Turn : Player #{player}".center(50)
   move = get_move
   update_board(move,player)
   flag = check(player)
+  display
   turn += 1
   # check if draw
   if @board.flatten.uniq.length == 2 && flag == false
