@@ -32,12 +32,12 @@ def get_move
   puts "Enter the number where you'd like to play your turn: "
   puts "Press x to quit"
   move = gets.chomp
-  if move == "x"
-    puts "Bye!"
-    exit
-  end
   # input can only be the number that is still on the board (i.e empty spaces)
   while !(@board.flatten.include?(move)) do
+    if move == "x"
+      puts "Bye!"
+      exit
+    end
     puts "Please enter a valid number"
     move = gets.chomp
   end
