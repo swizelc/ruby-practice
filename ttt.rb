@@ -2,17 +2,30 @@
 # tik-tac-toe game
 
 @board = [["1","2","3"],["4","5","6"],["7","8","9"]]
+O = "\u{2B55}"
+X = "\u{274C}"
 
 # draws the board
 def draw_grid
   @board.length.times { |i|
-    puts "    #{@board[i][0]} |   #{@board[i][1]} |   #{@board[i][2]} ".center(48)
+    puts "  #{@board[i][0]}  |  #{@board[i][1]}  |  #{@board[i][2]}  "
     unless i == 2
-      puts "----------------".center(50)
+      puts "------------------"
     end
   }
 end
 
+def update_board(move, player)
+  #find the space through the number
+  @board.each { |x|
+    x.each { |y|
+      if y == move
+        #reference by index and change it
+        player == "1" ? (@board[(@board.index(x))][x.index(y)] = X) : (@board[(@board.index(x))][x.index(y)] = O)
+      end
+    }
+  }
+end
 
 def get_move
   draw_grid()
@@ -29,18 +42,6 @@ def get_move
     move = gets.chomp
   end
   return move
-end
-
-def update_board(move, player)
-  #find the space through the number
-  @board.each { |x|
-    x.each { |y|
-      if y == move
-        #reference by index and change it
-        player == "1" ? (@board[(@board.index(x))][x.index(y)] = "X") : (@board[(@board.index(x))][x.index(y)] = "O")
-      end
-    }
-  }
 end
 
 def check(player)
@@ -64,7 +65,8 @@ def check(player)
     return
   end
   return false
-end
+  end
+
 
 flag = false
 turn = 1
@@ -77,7 +79,7 @@ while flag == false do
   flag = check(player)
   turn += 1
   # check if draw
-  if @board.flatten.uniq.length == 2
+  if @board.flatten.uniq.length == 2 && flag == false
     puts "It's a draw".center(50,"~")
     flag = true
   end
