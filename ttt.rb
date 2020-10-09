@@ -47,6 +47,7 @@ def check(player)
   #checking for an in identical row
   @board.each do |x|
     if x.uniq.length == 1
+      display
       puts "Player #{player} wins".center(50, "~")
       return true
     end
@@ -54,12 +55,14 @@ def check(player)
   #checking for identical column
   for i in 0..2 do
     if @board[0][i] == @board[1][i] && @board[1][i]== @board[2][i]
+      display
       puts "Player #{player} wins".center(50, "~")
       return true
     end
   end
   #checking for across from either side
   if (@board[0][0] == @board[1][1] && @board[1][1]== @board[2][2]) || (@board[0][2] == @board[1][1] && @board[1][1] == @board[2][0])
+    display
     puts "Player #{player} wins".center(50, "~")
     return true
   end
@@ -81,7 +84,6 @@ while flag == false do
   move = get_move
   update_board(move,player)
   flag = check(player)
-  display
   turn += 1
   # check if draw
   if @board.flatten.uniq.length == 2 && flag == false
